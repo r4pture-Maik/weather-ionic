@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input } from '@angular/core';
-
+import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { LoginComponent } from './components/login/login.component';
+import { DataShareService } from './services/data-share-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
-  @Input() loggedApp = new EventEmitter<boolean>()
-  //@Output() logged = new EventEmitter<boolean>() 
-
+  //@Input() loggedApp = new EventEmitter<String>()
+  //@Output() logged = new EventEmitter<string>() 
+  //@ViewChild(RouterLoginModule) child;
+  public logged: boolean = true
   public appPages = [
     { title: 'Login', url: '/login', icon: 'log-in' },
     { title: 'Register', url: '/register', icon: 'body' },
@@ -18,11 +20,26 @@ export class AppComponent {
     //{ title: 'Search', url: '/folder/Favorites', icon: 'search' },
   ];
 
-  constructor() {}
-  checkLogin(logged: boolean){
-    console.log("L'utente è " + logged)
-    if(logged){
-    console.log("L'utente è " + logged)
-    }
+  constructor(private dataShareService: DataShareService) {}
+
+  message = ""
+
+  ngOnInit(){
+    //Forse si potrebbe fare una richiesta al server?
+    this.dataShareService.isUserLoggedIn.subscribe(value => {
+      this.logged = value;
+    });
   }
+
+
+  // ngAfterViewInit(){
+  //   console.log(this.child.message)
+  //   this.message = this.child.message
+  //   console.log(this.message)
+  // }
+
+  // checkLogin($event){
+  //   this.message=$event
+  // }
+
 }

@@ -9,18 +9,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //ComponentsModule
-
-
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 import { ApiServiceService } from './api-service.service';
-import { NavbarModule } from './components/navbar/navbar.module';
-//import { RegisterModule } from './components/register/register.module';
+import { NavbarRoutingModule } from './components/navbar/navbar-routing.module';
+import { RegisterModule } from './components/register/register.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,ReactiveFormsModule,NavbarModule],
+  imports: [BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    NavbarRoutingModule,
+    RegisterModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  },ApiServiceService],
   bootstrap: [AppComponent],
 

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiServiceService } from 'src/app/api-service.service';
+import { RegisterService } from '../../services/register.service';
+import { LoginService } from '../../services/login.service';
 import { countryCodes } from '../../../assets/countryCodes'
 
 
@@ -9,7 +10,7 @@ import { countryCodes } from '../../../assets/countryCodes'
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [ApiServiceService]
+  providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit {
   public myForm: FormGroup;
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
     imperial: 'Farenheit',
     standard: 'Kelvin'
   }
-  constructor(private fc: FormBuilder, private apicaller: ApiServiceService, private router: Router) { }
+  constructor(private fc: FormBuilder, private registerService: RegisterService, private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
     this.countryCodes = countryCodes
@@ -53,7 +54,7 @@ export class RegisterComponent implements OnInit {
 
   formRegister = async () => {
     try {
-      await this.apicaller.register(this.name,
+      await this.registerService.register(this.name,
         this.surname,
         this.username,
         this.email,
@@ -61,7 +62,7 @@ export class RegisterComponent implements OnInit {
         this.country,
         this.city,
         this.unit)
-      const res = await this.apicaller.login(this.email, this.password)
+      const res = await this.loginService.login(this.email, this.password)
       sessionStorage.setItem("user", JSON.stringify({ email: this.email, token: res.token }))
       this.logged.emit(true)
       //this.dataShareService.isUserLoggedIn.next(true); ;

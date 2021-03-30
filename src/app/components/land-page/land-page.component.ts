@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiServiceService } from 'src/app/api-service.service';
+import { ForecastService } from '../../services/forecast.service';
 import { City, ForecastRes, mappedForecast } from 'src/app/interfaces/forecast';
 
 @Component({
@@ -9,7 +9,7 @@ import { City, ForecastRes, mappedForecast } from 'src/app/interfaces/forecast';
 })
 export class LandPageComponent implements OnInit {
 
-  constructor(private apiCaller:ApiServiceService) { }
+  constructor(private apiCaller:ForecastService) { }
 
   ngOnInit():void {
     this.getLocation() 

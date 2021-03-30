@@ -26,10 +26,6 @@ const routes: Routes = [
   {
     path: 'my-weather',
     loadChildren: () => import('./components/my-weathers/my-weathers.module').then(m => m.MyWeathersModule),
-  },
-  {
-    path: 'navbar',
-    loadChildren: () => import('./components/navbar/navbar.module').then(m => m.NavbarModule),
   }
 ];
 @NgModule({
