@@ -1,4 +1,5 @@
 <ion-content>
+  <app-navbar></app-navbar>
   <ion-content>
     <ion-app>
       <ion-split-pane contentId="main-content">
@@ -7,33 +8,33 @@
             <ion-list id="inbox-list">
               <ion-list-header>{{logged}}</ion-list-header>
               <ion-note>hi@ionicframework.com</ion-note>
-
-                <ion-item *ngIf="!logged" routerDirection="root" [routerLink]="['/login']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-menu-toggle>
+                <ion-item routerDirection="root" [routerLink]="['/land']" lines="none" detail="false"
+                  routerLinkActive="selected">
+                  <ion-icon slot="start" [ios]="'home' + '-outline'" [md]="'home'+ '-sharp'"></ion-icon>
+                  <ion-label>Home</ion-label>
+                </ion-item>
+                <ion-item *ngIf="!logged" routerDirection="root" [routerLink]="['/login']" lines="none" detail="false"
+                  routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="'log-in' + '-outline'" [md]="'log-in'+ '-sharp'"></ion-icon>
                   <ion-label>Login</ion-label>
                 </ion-item>
-
-                <ion-item *ngIf="!logged" routerDirection="root" [routerLink]="['/register']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-item *ngIf="!logged" routerDirection="root" [routerLink]="['/register']" lines="none"
+                  detail="false" routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="'body' + '-outline'" [md]="'body'+ '-sharp'"></ion-icon>
                   <ion-label>Register</ion-label>
                 </ion-item>
-                
-                <ion-item *ngIf="logged" routerDirection="root" [routerLink]="['/my-weather']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-item *ngIf="logged" routerDirection="root" [routerLink]="['/my-weather']" lines="none"
+                  detail="false" routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="'search' + '-outline'" [md]="'search'+ '-sharp'"></ion-icon>
                   <ion-label>Search</ion-label>
                 </ion-item>
-
-                <ion-item *ngIf="logged" routerDirection="root" [routerLink]="['/my-weather']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-item *ngIf="logged" routerDirection="root" [routerLink]="['/my-weather']" lines="none"
+                  detail="false" routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="'log-out' + '-outline'" [md]="'log-out'+ '-sharp'"></ion-icon>
                   <ion-label>Logout</ion-label>
                 </ion-item>
-
-              <!--<ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index" >
-                <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                  <ion-label>{{ p.title }}</ion-label>
-                </ion-item>
-              </ion-menu-toggle>-->
+              </ion-menu-toggle>
             </ion-list>
           </ion-content>
         </ion-menu>
@@ -41,6 +42,10 @@
       </ion-split-pane>
     </ion-app>
   </ion-content>
-    
-
 </ion-content>
+ <!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages;" >
+                <ion-item *ngIf="menuButtonHandler(p.title)" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle> -->

@@ -1,16 +1,18 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from '../../services/register.service';
 import { LoginService } from '../../services/login.service';
-import { countryCodes } from '../../../assets/countryCodes'
+import { countryCodes } from '../../../assets/countryCodes';
+import { DataShareService } from 'src/app/services/data-share-service';
+
 
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [RegisterService]
+  providers: [RegisterService],
 })
 export class RegisterComponent implements OnInit {
   public myForm: FormGroup;
@@ -22,17 +24,16 @@ export class RegisterComponent implements OnInit {
   public country: string
   public city: string
   public unit: string
+  public metric: string
   public alreadyExist: boolean = false
-
   countryCodes
 
-  @Output() logged = new EventEmitter<boolean>()
-  units = {
-    metric: 'Celsius',
-    imperial: 'Farenheit',
-    standard: 'Kelvin'
-  }
-  constructor(private fc: FormBuilder, private registerService: RegisterService, private loginService: LoginService, private router: Router) { }
+  units = {'metric': 'Celsius', 
+  'imperial': 'Farenheit', 
+  'standard': 'Kelvin'}
+
+  constructor(private fc: FormBuilder, private registerService: RegisterService, 
+              private loginService: LoginService, private router: Router, private dataShareService: DataShareService) { }
 
   ngOnInit(): void {
     this.countryCodes = countryCodes
@@ -52,21 +53,25 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  portChange({value:{ value }}) {
+    this.country = value
+    console.log('Value:',  value);
+  }
+
   formRegister = async () => {
-    try {
+     try {
       await this.registerService.register(this.name,
         this.surname,
         this.username,
         this.email,
         this.password,
         this.country,
-        this.city,
+        "Catania",
         this.unit)
       const res = await this.loginService.login(this.email, this.password)
       sessionStorage.setItem("user", JSON.stringify({ email: this.email, token: res.token }))
-      this.logged.emit(true)
-      //this.dataShareService.isUserLoggedIn.next(true); ;
-      //this.router.navigate(['/'])
+      this.dataShareService.isUserLoggedIn.next(true); ;
+      this.router.navigate(['/'])
     } catch (error) {
       alert(error.error.Error)
     }

@@ -24,10 +24,36 @@
       <ion-label position="floating">Password</ion-label>
       <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
     </ion-item>
+    
+    <ion-item>
+      <ion-label>Unit</ion-label>
+      <ion-select interface="popover" placeholder="Select one" [(ngModel)]="unit" name="unit">
+        <ion-select-option *ngFor="let item of units | keyvalue" [value]="item.key">{{item.value}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Country</ion-label>
+      <ion-select placeholder="Select one" [(ngModel)]="country" name="country">
+        <ion-select-option *ngFor="let item of countryCodes | keyvalue" [value]="item.value">{{item.key}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Port</ion-label>
+      <ionic-selectable
+        [items]="countryCodes | keyvalue"
+        [canClear]="true"
+        itemValueField="key" 
+        itemTextField="key"
+        [canSearch]="true"
+        (onChange)="portChange($event)">
+      </ionic-selectable>
+    </ion-item>
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="danger" expand="block">Sign Up</ion-button>
+        <ion-button (click)="formRegister()" type="submit" color="danger" expand="block" >Sign Up</ion-button>
       </ion-col>
     </ion-row>
   </form>

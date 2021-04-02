@@ -13,16 +13,14 @@ export class AppComponent implements OnInit{
   //@Output() logged = new EventEmitter<string>() 
   //@ViewChild(RouterLoginModule) child;
   public logged: boolean = true
-  public appPages = [
-    { title: 'Login', url: '/login', icon: 'log-in' },
-    { title: 'Register', url: '/register', icon: 'body' },
-    { title: 'Logout', url: '/register', icon: 'log-out' },
-    //{ title: 'Search', url: '/folder/Favorites', icon: 'search' },
-  ];
+  // public appPages = [
+  //   { title: 'Login', url: '/login', icon: 'log-in' },
+  //   { title: 'Register', url: '/register', icon: 'body' },
+  //   { title: 'Logout', url: '/register', icon: 'log-out' },
+  //   { title: 'Search', url: '/my-weather', icon: 'search' },
+  // ];
 
   constructor(private dataShareService: DataShareService) {}
-
-  message = ""
 
   ngOnInit(){
     //Forse si potrebbe fare una richiesta al server?
@@ -30,7 +28,6 @@ export class AppComponent implements OnInit{
       this.logged = value;
     });
   }
-
 
   // ngAfterViewInit(){
   //   console.log(this.child.message)

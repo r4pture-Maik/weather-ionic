@@ -4,7 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
+import { IonicSelectableModule } from 'ionic-selectable';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -22,6 +22,7 @@ import { RegisterModule } from './components/register/register.module';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
+    IonicSelectableModule,
     ReactiveFormsModule,
     NavbarRoutingModule,
     RegisterModule],
