@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from './interfaces/user';
-import {AuthRes} from './interfaces/auth-res'
-import {CurrentRes, ForecastRes } from './interfaces/forecast'
+import { AuthRes} from './interfaces/auth-res'
+import { CurrentRes, ForecastRes } from './interfaces/forecast'
 import { Router } from '@angular/router';
 
 

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { LoginComponent } from './components/login/login.component';
+import { Component, OnInit } from '@angular/core';
+//import { LoginComponent } from './components/login/login.component';
+import { Router } from '@angular/router';
 import { DataShareService } from './services/data-share-service';
-
+import { LogoutService } from './services/logout.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -9,9 +10,6 @@ import { DataShareService } from './services/data-share-service';
 })
 export class AppComponent implements OnInit{
 
-  //@Input() loggedApp = new EventEmitter<String>()
-  //@Output() logged = new EventEmitter<string>() 
-  //@ViewChild(RouterLoginModule) child;
   public logged: boolean = true
   // public appPages = [
   //   { title: 'Login', url: '/login', icon: 'log-in' },
@@ -20,23 +18,22 @@ export class AppComponent implements OnInit{
   //   { title: 'Search', url: '/my-weather', icon: 'search' },
   // ];
 
-  constructor(private dataShareService: DataShareService) {}
+  constructor(private dataShareService: DataShareService, private logoutS: LogoutService, private router: Router,) {}
 
   ngOnInit(){
-    //Forse si potrebbe fare una richiesta al server?
     this.dataShareService.isUserLoggedIn.subscribe(value => {
       this.logged = value;
     });
   }
 
-  // ngAfterViewInit(){
-  //   console.log(this.child.message)
-  //   this.message = this.child.message
-  //   console.log(this.message)
-  // }
-
-  // checkLogin($event){
-  //   this.message=$event
-  // }
-
+  logout = async () => {
+    try {
+      await this.logoutS.logout();
+      sessionStorage.removeItem("user");
+      this.logged = false
+      this.router.navigate(['/'])
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

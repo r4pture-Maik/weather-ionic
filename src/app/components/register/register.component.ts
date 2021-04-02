@@ -37,21 +37,21 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.countryCodes = countryCodes
-    this.createForm()
+    //this.createForm()
   }
 
-  createForm() {
-    this.myForm = this.fc.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      unit: ['', Validators.required],
-    })
-  }
+  // createForm() {
+  //   this.myForm = this.fc.group({
+  //     name: ['', Validators.required],
+  //     surname: ['', Validators.required],
+  //     username: ['', Validators.required],
+  //     email: ['', Validators.required],
+  //     password: ['', Validators.required],
+  //     city: ['', Validators.required],
+  //     country: ['', Validators.required],
+  //     unit: ['', Validators.required],
+  //   })
+  // }
 
   portChange({value:{ value }}) {
     this.country = value
@@ -66,11 +66,11 @@ export class RegisterComponent implements OnInit {
         this.email,
         this.password,
         this.country,
-        "Catania",
+        this.city,
         this.unit)
       const res = await this.loginService.login(this.email, this.password)
       sessionStorage.setItem("user", JSON.stringify({ email: this.email, token: res.token }))
-      this.dataShareService.isUserLoggedIn.next(true); ;
+      this.dataShareService.isUserLoggedIn.next(true); 
       this.router.navigate(['/'])
     } catch (error) {
       alert(error.error.Error)

@@ -12,7 +12,7 @@ export class LandPageComponent implements OnInit {
   constructor(private apiCaller:ForecastService) { }
 
   ngOnInit():void {
-    this.getLocation() 
+    //this.getLocation() 
   }
 
 
@@ -32,17 +32,17 @@ export class LandPageComponent implements OnInit {
   ]
 
 
-  getLocation(): void {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          this.longitude = position.coords.longitude;
-          this.latitude = position.coords.latitude;
-          this.forecast = await this.apiCaller.foreCoordAll(this.longitude, this.latitude, "metric")
-        });
-    } else {
-       console.log("No support for geolocation")
-    }
-  }
+  // getLocation(): void {
+  //   if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition(async (position) => {
+  //         this.longitude = position.coords.longitude;
+  //         this.latitude = position.coords.latitude;
+  //         this.forecast = await this.apiCaller.foreCoordAll(this.longitude, this.latitude, "metric")
+  //       });
+  //   } else {
+  //      console.log("No support for geolocation")
+  //   }
+  // }
 
   get mappedForecast(): mappedForecast {
     return this.forecast?.forecast.reduce((acc,value) => {

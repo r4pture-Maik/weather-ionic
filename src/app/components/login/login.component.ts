@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataShareService } from 'src/app/services/data-share-service';
 import { LoginService } from '../../services/login.service';
 
@@ -13,9 +14,8 @@ export class LoginComponent implements OnInit {
   public email: string;
   public password: string;
   public message: string
-  @Output() logged = new EventEmitter<String>()
 
-  constructor(private loginService:LoginService, private dataShareService: DataShareService) { }
+  constructor(private loginService:LoginService, private dataShareService: DataShareService, private router: Router) { }
 
   ngOnInit() {}
 
@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
         )
       )
       this.dataShareService.isUserLoggedIn.next(true);
+      sessionStorage.setItem("user", JSON.stringify({ email: this.email, token: res.token }))
+      this.router.navigate(['/my-weather'])
     } catch(error) {
       console.log(error)
       alert(error.error.error)

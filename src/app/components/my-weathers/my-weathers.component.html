@@ -1,3 +1,33 @@
-<p>
-  my-weathers works!
-</p>
+<ion-content>
+  <ion-searchbar></ion-searchbar>
+  <!--<mat-radio-button class="mx-1" value="city" (click)="searchChoice = 'city'">City</mat-radio-button>-->
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+        <ion-item>
+            <ion-select placeholder="Choose" interface="popover">
+              <ion-select-option value="nes">Forecast</ion-select-option>
+              <ion-select-option value="n64">Current</ion-select-option>
+            </ion-select>
+        </ion-item>
+      </ion-list>
+      </ion-col>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-select placeholder="Choose" interface="popover">
+              <ion-select-option value="ps">City</ion-select-option>
+              <ion-select-option value="genesis">City ID</ion-select-option>
+              <ion-select-option value="saturn">Coordinates</ion-select-option>
+              <ion-select-option value="snes">Zip Code</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+{{long}}
+{{lat}}
+</ion-content>
