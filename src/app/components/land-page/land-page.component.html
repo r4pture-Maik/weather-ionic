@@ -1,4 +1,34 @@
 
-<p>
-  land-page works!
-</p>
+<ion-content>
+  <p>aasdasd {{mappedForecast}}</p>
+<ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let item of grouppedForecast" (click)="setDayKey(item)" >
+          {{item | date:'d'}}
+        </ion-col>
+      </ion-row>
+      <div *ngIf="mappedForecast">
+        <ion-col>
+          asd
+        
+        <ion-row *ngFor="let item of mappedForecast[dayKey]; let indexOf=index;" (click)="test(item)">
+            <ion-col>
+              {{item.temp.temp | number: '1.0-0'}}
+            </ion-col>
+        </ion-row>
+      </ion-col>
+      </div>
+    </ion-grid>
+</ion-card>
+</ion-content>
+
+
+
+
+
+
+
+
+
+

@@ -12,24 +12,24 @@ export class CurrentService {
 
   constructor(private client: HttpClient, private router: Router) { }
 
-  currentCityName = async (long: string, lat: string, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
+  currentCityName = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
     const { token } = JSON.parse(sessionStorage.getItem("user"))
     const headers = new HttpHeaders().set("unit", unit).set("token", token );
     return await this.client.get(this.uriCurrent + `/cities/${cityName}`, { headers }).toPromise() as Promise<CurrentRes>;
   }
 
-  currentCityId = async (long: string, lat: string, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
+  currentCityId = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
     const headers = new HttpHeaders().set("unit", unit);
     return await this.client.get(this.uriCurrent + `/id/${cityId}`, { headers,  }).toPromise() as Promise<CurrentRes>;
   }
 
-  currentZipCode = async (long: string, lat: string, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
+  currentZipCode = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
     const { token } = JSON.parse(sessionStorage.getItem("user"))
     const headers = new HttpHeaders().set("unit", unit).set("token", token );
     return await this.client.get(this.uriCurrent + `/coutries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<CurrentRes>;
   }
 
-  currentCoordinates = async (long: string, lat: string, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string) => {
+  currentCoordinates = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string) => {
     const { token } = JSON.parse(sessionStorage.getItem("user"))
     const headers = new HttpHeaders().set("unit", unit).set("token", token );
     return  await this.client.get(this.uriCurrent + `/coordinates?long=${long}&lat=${lat}`, { headers }).toPromise() as Promise<CurrentRes>;

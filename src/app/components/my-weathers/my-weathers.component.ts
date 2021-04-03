@@ -15,8 +15,8 @@ export class MyWeathersComponent implements OnInit {
   searchChoice: string
   country: string
   isCurrent: boolean
-  lat: string
-  long: string
+  lat: number
+  long: number
 
   currentRes: CurrentRes | ForecastRes
   forecastRes: ForecastRes
@@ -42,8 +42,8 @@ export class MyWeathersComponent implements OnInit {
     //this.apicaller.isLogged();
     this.countryCodes = countryCodes 
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.lat = String(resp.coords.latitude)
-      this.long = String(resp.coords.longitude)
+      this.lat = resp.coords.latitude
+      this.long = resp.coords.longitude
      }).catch((error) => {
        console.log('Error getting location', error);
      });
@@ -70,7 +70,25 @@ export class MyWeathersComponent implements OnInit {
     this.currentRes = await this.chooseCall(this.isCurrent, this.searchChoice)(this.long, this.lat, "95022", "IT", "pippo", "Mineo", "Metric")
   }
   
+  //Forecast functions
+  get mappedForecast(): mappedForecast {
+    if(!this.isCurrent || this.isCurrent !== undefined)
+    return this.forecastRes?.forecast.reduce((acc,value) => {
+      const date = value.time.split(" ", 1)[0]
+      return {
+        ...acc,
+        [date]: [...(acc[date] ? acc[date] : []), value]
+      }
+    }, {} )
+  }
 
+  get grouppedForecast(): string[] {
+    return this.mappedForecast ? Object.keys(this.mappedForecast) : []
+  }
+
+  get city(): City {
+    return this.forecastRes?.city
+  }
 
   // async chooseCall(): Promise<void> {
   //   this.apicaller.isLogged()
@@ -168,25 +186,6 @@ export class MyWeathersComponent implements OnInit {
 
 
   
-//Forecast functions
-  get mappedForecast(): mappedForecast {
-    
-    if(!this.isCurrent || this.isCurrent !== undefined)
-    return this.forecastRes?.forecast.reduce((acc,value) => {
-      const date = value.time.split(" ", 1)[0]
-      return {
-        ...acc,
-        [date]: [...(acc[date] ? acc[date] : []), value]
-      }
-    }, {} )
-  }
 
-  get grouppedForecast(): string[] {
-    return Object.keys(this.mappedForecast)
-  }
-
-  get city(): City {
-    return this.forecastRes?.city
-  }
 
 }

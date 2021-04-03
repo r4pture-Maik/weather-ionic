@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-//import { LoginComponent } from './components/login/login.component';
 import { Router } from '@angular/router';
 import { DataShareService } from './services/data-share-service';
 import { LogoutService } from './services/logout.service';
+//import { Geolocation } from '@ionic-native/geolocation';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit{
   //   { title: 'Search', url: '/my-weather', icon: 'search' },
   // ];
 
-  constructor(private dataShareService: DataShareService, private logoutS: LogoutService, private router: Router,) {}
+  constructor(private dataShareService: DataShareService, private logoutS: LogoutService, private router: Router) {}
 
   ngOnInit(){
     this.dataShareService.isUserLoggedIn.subscribe(value => {
