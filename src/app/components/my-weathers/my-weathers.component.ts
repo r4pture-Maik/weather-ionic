@@ -18,7 +18,7 @@ export class MyWeathersComponent implements OnInit {
   lat: number
   long: number
 
-  currentRes: CurrentRes | ForecastRes
+  researchRes: CurrentRes | ForecastRes
   forecastRes: ForecastRes
 
   displayedColumns: string[] = [
@@ -57,9 +57,9 @@ export class MyWeathersComponent implements OnInit {
         case "cityid": return isCurrent ? 
                       this.currentService.currentCityId : 
                       this.forecastService.forecastCityId;
-        // case "zipcode": return isCurrent ? 
-        //               this.currentService.currentZipCode : 
-        //               this.forecastService.forecastZipCode;
+        case "zipcode": return isCurrent ? 
+                      this.currentService.currentZipCode : 
+                      this.forecastService.forecastZipCode;
         case "coordinates": return isCurrent ? 
                       this.currentService.currentCoordinates : 
                       this.forecastService.forecastCoordinates;
@@ -67,13 +67,13 @@ export class MyWeathersComponent implements OnInit {
   }
 
   caller = async (): Promise<void> => {
-    this.currentRes = await this.chooseCall(this.isCurrent, this.searchChoice)(this.long, this.lat, "95022", "IT", "pippo", "Mineo", "Metric")
+    this.researchRes = await this.chooseCall(this.isCurrent, this.searchChoice)(this.long, this.lat, "95022", "IT", "pippo", "Mineo", "Metric")
   }
   
   //Forecast functions
   get mappedForecast(): mappedForecast {
     if(!this.isCurrent || this.isCurrent !== undefined)
-    return this.forecastRes?.forecast.reduce((acc,value) => {
+    return this.researchRes?.forecast.reduce((acc,value) => {
       const date = value.time.split(" ", 1)[0]
       return {
         ...acc,
