@@ -1,34 +1,29 @@
-
-<ion-content>
-  <p>aasdasd {{mappedForecast}}</p>
-<ion-card>
-    <ion-grid>
-      <ion-row>
-        <ion-col *ngFor="let item of grouppedForecast" (click)="setDayKey(item)" >
-          {{item | date:'d'}}
-        </ion-col>
-      </ion-row>
-      <div *ngIf="mappedForecast">
-        <ion-col>
-          asd
-        
-        <ion-row *ngFor="let item of mappedForecast[dayKey]; let indexOf=index;" (click)="test(item)">
-            <ion-col>
-              {{item.temp.temp | number: '1.0-0'}}
-            </ion-col>
-        </ion-row>
-      </ion-col>
-      </div>
-    </ion-grid>
-</ion-card>
-</ion-content>
+<div class="my-tabs">
+  <div class="my-tabs-inner">
+    <p *ngIf="!tab">Pick a date</p>
+    <ng-container *ngIf="tab">
+      <ion-list>
+        <ion-item *ngFor="let item of mappedForecast[tab]">
+          <ion-avatar slot="start">
+            <img src="http://openweathermap.org/img/wn/{{item.wea.icon}}@2x.png">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{item.time | date: 'hh:mm'}}</h2>
+            <h3>{{item.wea.main}}</h3>
+            <p>{{item.temp.temp}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </div>
 
 
-
-
-
-
-
-
-
-
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">
+        <ion-label>{{key | date:'dd/M'}}</ion-label>
+        <ion-icon name="musical-note"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</div>
