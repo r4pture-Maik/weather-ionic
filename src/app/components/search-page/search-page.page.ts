@@ -9,6 +9,7 @@ import {
 import { countryCodes } from '../../../assets/countryCodes';
 import { CurrentService } from '../../services/current.service';
 import { ForecastService } from '../../services/forecast.service';
+import { ApiServiceService } from '../../api-service.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
@@ -28,12 +29,17 @@ export class SearchPagePage implements OnInit {
   researchRes: CurrentRes | ForecastRes;
 
   constructor(
+    private apiCaller: ApiServiceService,
     private currentService: CurrentService,
     private forecastService: ForecastService
   ) {}
 
   ngOnInit() {
     this.countryCodes = countryCodes
+  }
+
+  ngAfterViewChecked(){
+    this.apiCaller.isLogged()
   }
 
   getLocation(): void {

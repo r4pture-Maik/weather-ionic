@@ -6,8 +6,10 @@
         <ion-menu contentId="main-content" type="overlay">
           <ion-content>
             <ion-list id="inbox-list">
-              <ion-list-header>{{logged}}</ion-list-header>
-              <ion-note>hi@ionicframework.com</ion-note>
+              <div *ngIf="logged">
+                <ion-list-header>{{userMail}}</ion-list-header>
+                <ion-note></ion-note>
+              </div>
               <ion-menu-toggle>
                 <ion-item routerDirection="root" [routerLink]="['/land']" lines="none" detail="false"
                   routerLinkActive="selected">
@@ -24,15 +26,10 @@
                   <ion-icon slot="start" [ios]="'body' + '-outline'" [md]="'body'+ '-sharp'"></ion-icon>
                   <ion-label>Register</ion-label>
                 </ion-item>
-                <ion-item *ngIf="logged" routerDirection="root" [routerLink]="['/my-weather']" lines="none"
+                <ion-item *ngIf="logged" routerDirection="root" [routerLink]="['/search-page']" lines="none"
                   detail="false" routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="'search' + '-outline'" [md]="'search'+ '-sharp'"></ion-icon>
                   <ion-label>Search</ion-label>
-                </ion-item>
-                <ion-item routerDirection="root" [routerLink]="['/search-page']" lines="none"
-                  detail="false" routerLinkActive="selected">
-                  <ion-icon slot="start" [ios]="'search' + '-outline'" [md]="'search'+ '-sharp'"></ion-icon>
-                  <ion-label>SearchPage</ion-label>
                 </ion-item>
 
                 <ion-item *ngIf="logged" routerDirection="root" lines="none" detail="false" routerLinkActive="selected"

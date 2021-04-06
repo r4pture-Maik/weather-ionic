@@ -12,7 +12,6 @@ export class LandPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocation();
-    
   }
 
   tab: string;

@@ -11,6 +11,7 @@ import { LogoutService } from './services/logout.service';
 export class AppComponent implements OnInit{
 
   public logged: boolean = true
+  public userMail: String = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")).email : null
   // public appPages = [
   //   { title: 'Login', url: '/login', icon: 'log-in' },
   //   { title: 'Register', url: '/register', icon: 'body' },
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit{
     this.dataShareService.isUserLoggedIn.subscribe(value => {
       this.logged = value;
     });
+    
   }
 
   logout = async () => {

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       )
       this.dataShareService.isUserLoggedIn.next(true);
       sessionStorage.setItem("user", JSON.stringify({ email: this.email, token: res.token }))
-      this.router.navigate(['/my-weather'])
+      this.router.navigate(['/search-page'])
     } catch(error) {
       console.log(error)
       alert(error.error.error)
