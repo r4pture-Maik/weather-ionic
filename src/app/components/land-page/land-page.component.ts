@@ -53,15 +53,6 @@ export class LandPageComponent implements OnInit {
 
   changeTab = (tabValue) => this.tab = tabValue;
 
-  setDayKey(dayKey) {
-    this.dayKey = dayKey;
-    console.log(this.mappedForecast['2021-04-03']);
-  }
-
-  test(item) {
-    console.log(item);
-  }
-
   get mappedForecast(): mappedForecast {
     return this.forecast?.forecast.reduce((acc, value) => {
       const date = value.time.split(' ', 1)[0];

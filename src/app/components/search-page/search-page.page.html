@@ -1,30 +1,128 @@
 <ion-content>
-  <ion-searchbar></ion-searchbar>
-  <!--<mat-radio-button class="mx-1" value="city" (click)="searchChoice = 'city'">City</mat-radio-button>-->
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-list>
-        <ion-item>
-            <ion-select placeholder="Choose" [(ngModel)]="isCurrent" interface="popover">
-              <ion-select-option value="false">Forecast</ion-select-option>
-              <ion-select-option value="true">Current</ion-select-option>
-            </ion-select>
-        </ion-item>
-      </ion-list>
-      </ion-col>
-      <ion-col>
-        <ion-list>
-          <ion-item>
-            <ion-select placeholder="Choose" [value]="searchChoice" interface="popover">
-              <ion-select-option value="ps">City</ion-select-option>
-              <ion-select-option value="genesis">City ID</ion-select-option>
-              <ion-select-option value="saturn">Coordinates</ion-select-option>
-              <ion-select-option value="snes">Zip Code</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-list>
-      </ion-col>
+      <ion-input [(ngModel)]="value" name="value" placeholder="Longitude"></ion-input>
+    </ion-row>
+    <ion-row  *ngIf="searchChoice === 'coordinates'">
+      <ion-input type="text" [(ngModel)]="lat" name="lat" placeholder="Latitude" required></ion-input>
     </ion-row>
   </ion-grid>
-</ion-content>
+  <ion-grid>
+    <form>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+          <ion-item>
+              <ion-select placeholder="Choose" [(ngModel)]="isCurrent" name="isCurrent" interface="popover">
+                <ion-select-option [value]="false">Forecast</ion-select-option>
+                <ion-select-option [value]="true">Current</ion-select-option>
+              </ion-select>
+          </ion-item>
+        </ion-list>
+        </ion-col>
+        <ion-col>
+          <ion-list>
+            <ion-item>
+              <ion-select placeholder="Choose"[(ngModel)]="searchChoice" name="searchChoice" interface="popover">
+                <ion-select-option value="city">City</ion-select-option>
+                <ion-select-option value="cityId">City ID</ion-select-option>
+                <ion-select-option value="coordinates">Coordinates</ion-select-option>
+                <ion-select-option value="zipCode">Zip Code</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-button type="submit" color="danger" expand="block" (click)="caller()">Sign In</ion-button>
+  </ion-grid>
+</ion-content> 
+
+
+<div *ngIf="researchRes && isCurrent === false">
+    <ng-container *ngIf="tab">
+      <ion-list class="forecast">
+        <ion-item>
+          <ion-avatar slot="start"></ion-avatar>
+          <ion-label><h3>Orario</h3></ion-label>
+          <ion-label><h3>Descrizione</h3></ion-label>
+          <ion-label><h3>Temp {{tempIndex}}</h3></ion-label>
+          <ion-label><h3>Vento</h3></ion-label>
+        </ion-item>
+
+        <ion-item *ngFor="let item of mappedForecast[tab]">
+          
+          <ion-avatar slot="start">
+            <img src="http://openweathermap.org/img/wn/{{item.wea.icon}}@2x.png">
+          </ion-avatar>
+          
+          <ion-label>
+            <h2>{{item.time | date: 'hh:mm'}}</h2>
+          </ion-label>
+
+          <ion-label>
+            <h2>{{item.wea.main}}</h2>
+          </ion-label>
+
+          <ion-label>
+            <h2>{{item.temp.temp}}</h2>
+          </ion-label>
+
+          <ion-label>
+            <h2>{{item.wind.speed}}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">
+        <ion-label>{{key | date:'dd/M'}}</ion-label>
+        <ion-icon name="sunny-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button (click)="changeTab('')">
+        <ion-label>Reset</ion-label>
+        <ion-icon name="search"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</div>
+
+
+<div *ngIf="researchRes && isCurrent">
+  <ng-container>
+    <ion-list class="forecast">
+      <ion-item>
+        <ion-avatar slot="start"></ion-avatar>
+        <ion-label><h3>Orario</h3></ion-label>
+        <ion-label><h3>Descrizione</h3></ion-label>
+        <ion-label><h3>Temp {{tempIndex}}</h3></ion-label>
+        <ion-label><h3>Vento</h3></ion-label>
+      </ion-item>
+
+      <ion-item>
+        
+        <ion-avatar slot="start">
+          <img src="http://openweathermap.org/img/wn/{{researchRes.forecast.wea.icon}}@2x.png">
+        </ion-avatar>
+        
+        <ion-label>
+          <h2>{{researchRes.forecast.time | date: 'hh:mm'}}</h2>
+        </ion-label>
+
+        <ion-label>
+          <h2>{{researchRes.forecast.wea.main}}</h2>
+        </ion-label>
+
+        <ion-label>
+          <h2>{{researchRes.forecast.temp.temp}}</h2>
+        </ion-label>
+
+        <ion-label>
+          <h2>{{researchRes.forecast.wind.speed}}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</div>
+

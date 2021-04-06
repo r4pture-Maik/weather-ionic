@@ -21,9 +21,11 @@ export class SearchPagePage implements OnInit {
   value: string;
   searchChoice: string;
   country: string;
-  isCurrent: boolean;
   lat: number;
   long: number;
+  isCurrent: boolean;
+  tab: string;
+  tempIndex: string= "ASPARAGO";
   countryCodes;
 
   researchRes: CurrentRes | ForecastRes;
@@ -36,20 +38,14 @@ export class SearchPagePage implements OnInit {
 
   ngOnInit() {
     this.countryCodes = countryCodes
-  }
-
-  ngAfterViewChecked(){
     this.apiCaller.isLogged()
-  }
-
-  getLocation(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        this.long = position.coords.longitude;
-        this.lat = position.coords.latitude;
-      });
-    } else {
-      console.log('No support for geolocation');
+    switch (JSON.parse(sessionStorage.getItem("user")).unit) {
+      case 'metric':
+        this.tempIndex = "C"
+      case 'standard':
+        this.tempIndex = "K"
+      case 'imperial':
+        this.tempIndex = "F"
     }
   }
 
@@ -58,33 +54,36 @@ export class SearchPagePage implements OnInit {
       case 'city':
         return isCurrent
           ? this.currentService.currentCityName
-          : this.forecastService.forecastCityName;
+          : this.forecastService.forecastCityName
       case 'cityid':
         return isCurrent
           ? this.currentService.currentCityId
-          : this.forecastService.forecastCityId;
+          : this.forecastService.forecastCityId
       case 'zipcode':
         return isCurrent
           ? this.currentService.currentZipCode
-          : this.forecastService.forecastZipCode;
+          : this.forecastService.forecastZipCode
       case 'coordinates':
         return isCurrent
           ? this.currentService.currentCoordinates
-          : this.forecastService.forecastCoordinates;
+          : this.forecastService.forecastCoordinates
     }
   };
 
   caller = async (): Promise<void> => {
     this.researchRes = await this.chooseCall(this.isCurrent, this.searchChoice)(
-      this.long,
+      Number(this.value),
       this.lat,
-      '95022',
-      'IT',
-      'pippo',
-      'Mineo',
-      'Metric'
+      this.value,
+      this.value,
+      this.value,
+      this.value,
+      JSON.parse(sessionStorage.getItem("user")).unit
     );
+    console.log(this.researchRes)
   };
+
+  changeTab = (tabValue) => this.tab = tabValue;
 
   instanceOfForecast = (object: any): object is Forecast => 'temp' in object;
 

@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
 
   formRegister = async () => {
      try {
+       console.log(this.unit)
       await this.registerService.register(this.name,
         this.surname,
         this.username,
@@ -69,7 +70,16 @@ export class RegisterComponent implements OnInit {
         this.city,
         this.unit)
       const res = await this.loginService.login(this.email, this.password)
-      sessionStorage.setItem("user", JSON.stringify({ email: this.email, token: res.token }))
+      sessionStorage.setItem("user", JSON.stringify(
+          { 
+            email: this.email, 
+            token: res.token,
+            city: res.city,
+            country: res.country,
+            unit: res.unit
+          }
+        )
+      )
       this.dataShareService.isUserLoggedIn.next(true); 
       this.router.navigate(['/'])
     } catch (error) {
