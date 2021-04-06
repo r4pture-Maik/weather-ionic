@@ -24,8 +24,8 @@ const routes: Routes = [
     loadChildren: () => import('./components/register/register.module').then(m => m.RegisterModule),
   },
   {
-    path: 'my-weather',
-    loadChildren: () => import('./components/my-weathers/my-weathers.module').then(m => m.MyWeathersModule),
+    path: 'search-page',
+    loadChildren: () => import('./components/search-page/search-page.module').then( m => m.SearchPagePageModule)
   }
 ];
 @NgModule({

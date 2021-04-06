@@ -8,12 +8,13 @@ import { IonicModule } from '@ionic/angular';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [NavbarComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NavbarRoutingModule
+    NavbarRoutingModule,
+    NavbarComponent
   ]
 })
 export class NavbarModule { }

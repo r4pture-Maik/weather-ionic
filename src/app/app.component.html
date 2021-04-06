@@ -29,9 +29,14 @@
                   <ion-icon slot="start" [ios]="'search' + '-outline'" [md]="'search'+ '-sharp'"></ion-icon>
                   <ion-label>Search</ion-label>
                 </ion-item>
+                <ion-item routerDirection="root" [routerLink]="['/search-page']" lines="none"
+                  detail="false" routerLinkActive="selected">
+                  <ion-icon slot="start" [ios]="'search' + '-outline'" [md]="'search'+ '-sharp'"></ion-icon>
+                  <ion-label>SearchPage</ion-label>
+                </ion-item>
 
-                <ion-item *ngIf="logged" routerDirection="root" lines="none"
-                  detail="false" routerLinkActive="selected" (click)="logout()">
+                <ion-item *ngIf="logged" routerDirection="root" lines="none" detail="false" routerLinkActive="selected"
+                  (click)="logout()">
                   <ion-icon slot="start" [ios]="'log-out' + '-outline'" [md]="'log-out'+ '-sharp'"></ion-icon>
                   <ion-label>Logout</ion-label>
                 </ion-item>
@@ -45,7 +50,7 @@
     </ion-app>
   </ion-content>
 </ion-content>
- <!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages;" >
+<!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages;" >
                 <ion-item *ngIf="menuButtonHandler(p.title)" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
                   <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                   <ion-label>{{ p.title }}</ion-label>

@@ -6,9 +6,9 @@
       <ion-col>
         <ion-list>
         <ion-item>
-            <ion-select placeholder="Choose" interface="popover">
-              <ion-select-option value="nes">Forecast</ion-select-option>
-              <ion-select-option value="n64">Current</ion-select-option>
+            <ion-select placeholder="Choose" [(ngModel)]="isCurrent" interface="popover">
+              <ion-select-option value="false">Forecast</ion-select-option>
+              <ion-select-option value="true">Current</ion-select-option>
             </ion-select>
         </ion-item>
       </ion-list>
@@ -16,7 +16,7 @@
       <ion-col>
         <ion-list>
           <ion-item>
-            <ion-select placeholder="Choose" interface="popover">
+            <ion-select placeholder="Choose" [value]="searchChoice" interface="popover">
               <ion-select-option value="ps">City</ion-select-option>
               <ion-select-option value="genesis">City ID</ion-select-option>
               <ion-select-option value="saturn">Coordinates</ion-select-option>
@@ -28,6 +28,9 @@
     </ion-row>
   </ion-grid>
 
-{{long}}
-{{lat}}
+
+
+
+<!-- {{long}}
+{{lat}} -->
 </ion-content>
