@@ -38,7 +38,6 @@ export class SearchPagePage implements OnInit {
 
   ngOnInit() {
     this.countryCodes = countryCodes
-    this.apiCaller.isLogged()
     switch (JSON.parse(sessionStorage.getItem("user")).unit) {
       case 'metric':
         this.tempIndex = "C"
@@ -52,8 +51,11 @@ export class SearchPagePage implements OnInit {
     }
   }
 
+  ionViewWillEnter(){
+    this.apiCaller.isLogged()
+  }
+
   chooseCall = (isCurrent: boolean, byWhat: string) => {
-    console.log(JSON.parse(sessionStorage.getItem("user")).country)
     switch (byWhat) {
       case 'city':
         return isCurrent
@@ -75,7 +77,6 @@ export class SearchPagePage implements OnInit {
   };
 
   caller = async (): Promise<void> => {
-    console.log("user",JSON.parse(sessionStorage.getItem("user")))
     this.researchRes = await this.chooseCall(this.isCurrent, this.searchChoice)(
       Number(this.value),
       this.lat,
@@ -85,7 +86,6 @@ export class SearchPagePage implements OnInit {
       this.value,
       JSON.parse(sessionStorage.getItem("user")).unit
     );
-    console.log(this.researchRes)
   };
 
   changeTab = (tabValue) => {

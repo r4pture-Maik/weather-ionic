@@ -45,6 +45,7 @@ export class LandPageComponent implements OnInit {
           '',
           'metric'
         );
+        this.tab = this.grouppedForecast[0];
       });
     } else {
       console.log('No support for geolocation');

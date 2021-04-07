@@ -1,50 +1,81 @@
-<div class="my-tabs">
-  <div class="my-tabs-inner">
-    <p *ngIf="!tab">Pick a date</p>
-    <ng-container *ngIf="tab">
-      <ion-list>
-
-        <ion-item>
-          <ion-avatar slot="start"></ion-avatar>
-          <ion-label><h3>Orario</h3></ion-label>
-          <ion-label><h3>Descrizione</h3></ion-label>
-          <ion-label><h3>Temp C°</h3></ion-label>
-          <ion-label><h3>Vento</h3></ion-label>
-        </ion-item>
-
-        <ion-item *ngFor="let item of mappedForecast[tab]">
-          
-          <ion-avatar slot="start">
-            <img src="http://openweathermap.org/img/wn/{{item.wea.icon}}@2x.png">
-          </ion-avatar>
-          
-          <ion-label>
-            <h2>{{item.time | date: 'hh:mm'}}</h2>
-          </ion-label>
-
-          <ion-label>
-            <h2>{{item.wea.main}}</h2>
-          </ion-label>
-
-          <ion-label>
-            <h2>{{item.temp.temp}}</h2>
-          </ion-label>
-
-          <ion-label>
-            <h2>{{item.wind.speed}}</h2>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ng-container>
-  </div>
-
-
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">
-        <ion-label>{{key | date:'dd/M'}}</ion-label>
-        <ion-icon name="sunny-outline"></ion-icon>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+<div *ngIf="!tab">
+  <ion-list>
+    <ion-list-header>
+      <ion-skeleton-text animated style="width: 95%"></ion-skeleton-text>
+    </ion-list-header>
+    <ion-item *ngFor="let e of [].constructor(10);">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </div>
+
+
+<ng-container *ngIf="tab">
+  <ion-list>
+    <ion-item>
+      <ion-avatar slot="start"></ion-avatar>
+      <ion-label>
+        <h3>Orario</h3>
+      </ion-label>
+      <ion-label>
+        <h3>Descrizione</h3>
+      </ion-label>
+      <ion-label>
+        <h3>Temp C°</h3>
+      </ion-label>
+      <ion-label>
+        <h3>Vento</h3>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let item of mappedForecast[tab]">
+
+      <ion-avatar slot="start">
+        <img src="http://openweathermap.org/img/wn/{{item.wea.icon}}@2x.png">
+      </ion-avatar>
+
+      <ion-label>
+        <h2>{{item.time | date: 'hh:mm'}}</h2>
+      </ion-label>
+
+      <ion-label>
+        <h2>{{item.wea.main}}</h2>
+      </ion-label>
+
+      <ion-label>
+        <h2>{{item.temp.temp}}</h2>
+      </ion-label>
+
+      <ion-label>
+        <h2>{{item.wind.speed}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ng-container>
+
+<ion-tabs>
+  <ion-tab-bar *ngIf="!tab" slot="bottom">
+    <ion-tab-button *ngFor="let e of [].constructor(5)">
+      <ion-skeleton-text animated></ion-skeleton-text>
+    </ion-tab-button>
+  </ion-tab-bar>
+  <ion-tab-bar *ngIf="tab" slot="bottom">
+    <ion-tab-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">
+      <ion-label>{{key | date:'dd/M'}}</ion-label>
+      <ion-icon name="sunny-outline"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
