@@ -27,7 +27,7 @@ export class ForecastService {
   forecastZipCode = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {
     const { token } = JSON.parse(sessionStorage.getItem("user"))
     const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriForecast + `/coutries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<ForecastRes>;
+    return await this.client.get(this.uriForecast + `/countries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<ForecastRes>;
   }
 
   forecastCoordinates = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {

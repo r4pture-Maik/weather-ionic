@@ -33,7 +33,7 @@ export class AppComponent implements OnInit{
       await this.logoutS.logout();
       sessionStorage.removeItem("user");
       this.logged = false
-      this.router.navigate(['/'])
+      this.router.navigate([''])
     } catch (error) {
       console.log(error)
     }

@@ -1,3 +1,83 @@
+<ion-card *ngIf="researchRes && isCurrent">
+  <ion-grid class="current">
+  
+    <ion-row class="ion-justify-content-between ion-align-items-center">
+      <ion-col size="5">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="6">
+            <ion-avatar>
+              <img src="http://openweathermap.org/img/wn/{{researchRes.forecast.wea.icon}}@2x.png">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="6">
+            <p class="ion-text-nowrap">
+              {{researchRes.forecast.temp.temp}} {{tempIndex}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col size="5" class="ion-margin-end">
+        <ion-row class="ion-justify-content-end ion-wrap">
+          <ion-col class="ion-no-padding">
+            <h2 class="ion-no-margin ion-text-right ion-text-nowrap">{{researchRes.city.name}}</h2>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-right ion-text-nowrap">{{researchRes.forecast.wea.description}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>  
+    </ion-row>
+    
+    <ion-row class="ion-justify-content-around">
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+    </ion-row>
+  </ion-grid>
+</ion-card>
+
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -27,7 +107,7 @@
                 <ion-select-option value="city">City</ion-select-option>
                 <ion-select-option value="cityId">City ID</ion-select-option>
                 <ion-select-option value="coordinates">Coordinates</ion-select-option>
-                <ion-select-option value="zipCode">Zip Code</ion-select-option>
+                <ion-select-option value="zipcode">Zip Code</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-list>
@@ -36,7 +116,7 @@
     </form>
     <ion-button type="submit" color="danger" expand="block" (click)="caller()">Sign In</ion-button>
   </ion-grid>
-</ion-content> 
+</ion-content>
 
 
 <div *ngIf="researchRes && isCurrent === false">
@@ -80,7 +160,7 @@
         <ion-label>{{key | date:'dd/M'}}</ion-label>
         <ion-icon name="sunny-outline"></ion-icon>
       </ion-tab-button>
-      <ion-tab-button (click)="changeTab('')">
+      <ion-tab-button (click)="changeTab(null)">
         <ion-label>Reset</ion-label>
         <ion-icon name="search"></ion-icon>
       </ion-tab-button>
@@ -88,41 +168,4 @@
   </ion-tabs>
 </div>
 
-
-<div *ngIf="researchRes && isCurrent">
-  <ng-container>
-    <ion-list class="forecast">
-      <ion-item>
-        <ion-avatar slot="start"></ion-avatar>
-        <ion-label><h3>Orario</h3></ion-label>
-        <ion-label><h3>Descrizione</h3></ion-label>
-        <ion-label><h3>Temp {{tempIndex}}</h3></ion-label>
-        <ion-label><h3>Vento</h3></ion-label>
-      </ion-item>
-
-      <ion-item>
-        
-        <ion-avatar slot="start">
-          <img src="http://openweathermap.org/img/wn/{{researchRes.forecast.wea.icon}}@2x.png">
-        </ion-avatar>
-        
-        <ion-label>
-          <h2>{{researchRes.forecast.time | date: 'hh:mm'}}</h2>
-        </ion-label>
-
-        <ion-label>
-          <h2>{{researchRes.forecast.wea.main}}</h2>
-        </ion-label>
-
-        <ion-label>
-          <h2>{{researchRes.forecast.temp.temp}}</h2>
-        </ion-label>
-
-        <ion-label>
-          <h2>{{researchRes.forecast.wind.speed}}</h2>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ng-container>
-</div>
 

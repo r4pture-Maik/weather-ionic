@@ -26,7 +26,7 @@ export class CurrentService {
   currentZipCode = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
     const { token } = JSON.parse(sessionStorage.getItem("user"))
     const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriCurrent + `/coutries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<CurrentRes>;
+    return await this.client.get(this.uriCurrent + `/countries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<CurrentRes>;
   }
 
   currentCoordinates = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string) => {

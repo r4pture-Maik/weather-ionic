@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
 
   formRegister = async () => {
      try {
-       console.log(this.unit)
+       console.log(this.country)
       await this.registerService.register(this.name,
         this.surname,
         this.username,
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
         )
       )
       this.dataShareService.isUserLoggedIn.next(true); 
-      this.router.navigate(['/'])
+      this.router.navigate([''])
     } catch (error) {
       alert(error.error.Error)
     }

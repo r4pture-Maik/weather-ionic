@@ -25,7 +25,7 @@ export class SearchPagePage implements OnInit {
   long: number;
   isCurrent: boolean;
   tab: string;
-  tempIndex: string= "ASPARAGO";
+  tempIndex: string;
   countryCodes;
 
   researchRes: CurrentRes | ForecastRes;
@@ -42,14 +42,18 @@ export class SearchPagePage implements OnInit {
     switch (JSON.parse(sessionStorage.getItem("user")).unit) {
       case 'metric':
         this.tempIndex = "C"
+        break;
       case 'standard':
         this.tempIndex = "K"
+        break;
       case 'imperial':
         this.tempIndex = "F"
+        break;
     }
   }
 
   chooseCall = (isCurrent: boolean, byWhat: string) => {
+    console.log(JSON.parse(sessionStorage.getItem("user")).country)
     switch (byWhat) {
       case 'city':
         return isCurrent
@@ -71,11 +75,12 @@ export class SearchPagePage implements OnInit {
   };
 
   caller = async (): Promise<void> => {
+    console.log("user",JSON.parse(sessionStorage.getItem("user")))
     this.researchRes = await this.chooseCall(this.isCurrent, this.searchChoice)(
       Number(this.value),
       this.lat,
       this.value,
-      this.value,
+      JSON.parse(sessionStorage.getItem("user")).country,
       this.value,
       this.value,
       JSON.parse(sessionStorage.getItem("user")).unit
@@ -83,7 +88,10 @@ export class SearchPagePage implements OnInit {
     console.log(this.researchRes)
   };
 
-  changeTab = (tabValue) => this.tab = tabValue;
+  changeTab = (tabValue) => {
+    if(tabValue === null) this.researchRes = null
+    this.tab = tabValue;
+  }
 
   instanceOfForecast = (object: any): object is Forecast => 'temp' in object;
 
