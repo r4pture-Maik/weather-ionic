@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataShareService } from './services/data-share-service';
-import { LogoutService } from './services/logout.service';
 import { ApiServiceService } from './api-service.service';
 //import { Geolocation } from '@ionic-native/geolocation';
 @Component({
@@ -12,13 +11,7 @@ import { ApiServiceService } from './api-service.service';
 export class AppComponent implements OnInit{
 
   public logged: boolean = true
-  public userMail: String = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")).email : null
-  // public appPages = [
-  //   { title: 'Login', url: '/login', icon: 'log-in' },
-  //   { title: 'Register', url: '/register', icon: 'body' },
-  //   { title: 'Logout', url: '/register', icon: 'log-out' },
-  //   { title: 'Search', url: '/my-weather', icon: 'search' },
-  // ];
+  get userMail(): String { return sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")).email : null}
 
   constructor(private dataShareService: DataShareService, private logoutS: ApiServiceService, private router: Router) {}
 

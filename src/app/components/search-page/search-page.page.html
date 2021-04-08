@@ -19,11 +19,11 @@
   
       <ion-col size="5" class="ion-margin-end">
         <ion-row class="ion-justify-content-end ion-wrap">
-          <ion-col class="ion-no-padding">
-            <h2 class="ion-no-margin ion-text-right ion-text-nowrap">{{researchRes.city.name}}</h2>
+          <ion-col class="ion-no-padding" size="12">
+            <h2 class="ion-no-margin ion-text-right ">{{researchRes.city.name}}</h2>
           </ion-col>
-          <ion-col class="ion-no-padding">
-            <p class="ion-no-margin ion-text-right ion-text-nowrap">{{researchRes.forecast.wea.description}}</p>
+          <ion-col class="ion-no-padding" size="12">
+            <p class="ion-no-margin ion-text-right ">{{researchRes.forecast.wea.description}}</p>
           </ion-col>
         </ion-row>
       </ion-col>  
@@ -32,10 +32,10 @@
     <ion-row class="ion-justify-content-around">
       <ion-col>
         <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding">
+          <ion-col class="ion-no-padding" size="12">
             <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
           </ion-col>
-          <ion-col class="ion-no-padding">
+          <ion-col class="ion-no-padding" size="12">
             <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
           </ion-col>
         </ion-row>
@@ -43,33 +43,33 @@
   
       <ion-col>
         <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp min</h3>
           </ion-col>
-          <ion-col class="ion-no-padding">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-  
-      <ion-col>
-        <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
-          </ion-col>
-          <ion-col class="ion-no-padding">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
+          <ion-col class="ion-no-padding" size="12">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_min}}</p>
           </ion-col>
         </ion-row>
       </ion-col>
   
       <ion-col>
         <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Humidity</h3>
           </ion-col>
           <ion-col class="ion-no-padding">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.temp_max}}</p>
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.temp.humidity}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Wind</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.forecast.wind.speed}}</p>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -81,12 +81,13 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-input [(ngModel)]="value" name="value" placeholder="Longitude"></ion-input>
+      <ion-input [(ngModel)]="value" name="value" placeholder="{{placeholderInfo}}"></ion-input>
     </ion-row>
     <ion-row  *ngIf="searchChoice === 'coordinates'">
       <ion-input type="text" [(ngModel)]="lat" name="lat" placeholder="Latitude" required></ion-input>
     </ion-row>
   </ion-grid>
+
   <ion-grid>
     <form>
       <ion-row>
@@ -94,8 +95,8 @@
           <ion-list>
           <ion-item>
               <ion-select placeholder="Choose" [(ngModel)]="isCurrent" name="isCurrent" interface="popover">
-                <ion-select-option [value]="false">Forecast</ion-select-option>
-                <ion-select-option [value]="true">Current</ion-select-option>
+                <ion-select-option [value]="true">Currently</ion-select-option>
+                <ion-select-option [value]="false">Next days</ion-select-option>
               </ion-select>
           </ion-item>
         </ion-list>
@@ -114,7 +115,7 @@
         </ion-col>
       </ion-row>
     </form>
-    <ion-button type="submit" color="danger" expand="block" (click)="caller()">Sign In</ion-button>
+    <ion-button type="submit" color="danger" expand="block" (click)="caller()">Search</ion-button>
   </ion-grid>
 </ion-content>
 
@@ -124,10 +125,10 @@
       <ion-list class="forecast">
         <ion-item>
           <ion-avatar slot="start"></ion-avatar>
-          <ion-label><h3>Orario</h3></ion-label>
-          <ion-label><h3>Descrizione</h3></ion-label>
+          <ion-label><h3>Time</h3></ion-label>
+          <ion-label><h3>Description</h3></ion-label>
           <ion-label><h3>Temp {{tempIndex}}</h3></ion-label>
-          <ion-label><h3>Vento</h3></ion-label>
+          <ion-label><h3>Wind</h3></ion-label>
         </ion-item>
 
         <ion-item *ngFor="let item of mappedForecast[tab]">

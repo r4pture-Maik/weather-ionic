@@ -45,7 +45,7 @@ export class LandPageComponent implements OnInit {
           '',
           'metric'
         );
-        this.tab = this.grouppedForecast[0];
+        this.changeTab(this.grouppedForecast[0]); 
       });
     } else {
       console.log('No support for geolocation');
@@ -70,9 +70,5 @@ export class LandPageComponent implements OnInit {
 
   get city(): City {
     return this.forecast?.city;
-  }
-
-  delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

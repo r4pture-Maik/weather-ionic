@@ -89,13 +89,14 @@ export class SearchPagePage implements OnInit {
   };
 
   changeTab = (tabValue) => {
-    if(tabValue === null) this.researchRes = null
+    tabValue === null && (this.researchRes = null);
     this.tab = tabValue;
   }
 
   instanceOfForecast = (object: any): object is Forecast => 'temp' in object;
 
-  //Forecast functions
+  get placeholderInfo(): String {return this.searchChoice == "coordinates" ? "Longitude" : "Insert city information"}
+  
   get mappedForecast(): mappedForecast {
     if (!this.isCurrent || this.isCurrent !== undefined)
       return (
@@ -112,9 +113,5 @@ export class SearchPagePage implements OnInit {
 
   get grouppedForecast(): string[] {
     return this.mappedForecast ? Object.keys(this.mappedForecast) : [];
-  }
-
-  get city(): City {
-    return this.researchRes?.city;
   }
 }

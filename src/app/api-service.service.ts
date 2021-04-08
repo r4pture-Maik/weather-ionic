@@ -12,8 +12,6 @@ import { DataShareService } from 'src/app/services/data-share-service';
 export class ApiServiceService {
 
   private uriAuth = "http://localhost:3001/auth/"
-  private uriWeathers = "http://localhost:3001/weathers/";
-  private uriUpdates = "http://localhost:3001/updates";
 
   constructor(private client: HttpClient, private router: Router, private dataShareService: DataShareService) { }
  

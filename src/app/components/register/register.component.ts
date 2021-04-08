@@ -28,12 +28,19 @@ export class RegisterComponent implements OnInit {
   public alreadyExist: boolean = false
   countryCodes
 
-  units = {'metric': 'Celsius', 
-  'imperial': 'Farenheit', 
-  'standard': 'Kelvin'}
+  units = {
+    'metric': 'Celsius', 
+    'imperial': 'Farenheit', 
+    'standard': 'Kelvin'
+  }
 
-  constructor(private fc: FormBuilder, private registerService: RegisterService, 
-              private loginService: LoginService, private router: Router, private dataShareService: DataShareService) { }
+  constructor(
+    private fc: FormBuilder, 
+    private registerService: RegisterService, 
+    private loginService: LoginService, 
+    private router: Router, 
+    private dataShareService: DataShareService
+  ) { }
 
   ngOnInit(): void {
     this.countryCodes = countryCodes
@@ -42,25 +49,24 @@ export class RegisterComponent implements OnInit {
 
   // createForm() {
   //   this.myForm = this.fc.group({
-  //     name: ['', Validators.required],
-  //     surname: ['', Validators.required],
-  //     username: ['', Validators.required],
-  //     email: ['', Validators.required],
-  //     password: ['', Validators.required],
+  //     name: ['', [Validators.required, Validators.minLength(2)]],
+  //     surname: ['', [Validators.required,Validators.minLength(2)]],
+  //     username: ['', Validators.required, Validators.minLength(6)],
+  //     email: ['', [Validators.required,, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+  //     password: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]],
   //     city: ['', Validators.required],
   //     country: ['', Validators.required],
   //     unit: ['', Validators.required],
   //   })
   // }
 
-  portChange({value:{ value }}) {
-    this.country = value
-    console.log('Value:',  value);
-  }
+  // get errorForm(){
+  //   return this.myForm.controls
+  // }
 
+  
   formRegister = async () => {
      try {
-       console.log(this.country)
       await this.registerService.register(this.name,
         this.surname,
         this.username,
@@ -82,8 +88,8 @@ export class RegisterComponent implements OnInit {
       )
       this.dataShareService.isUserLoggedIn.next(true); 
       this.router.navigate([''])
-    } catch (error) {
-      alert(error.error.Error)
+    } catch ({error:{error: { Error}}}) {
+      alert(Error)
     }
   }
 
