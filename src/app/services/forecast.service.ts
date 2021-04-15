@@ -2,42 +2,33 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ForecastRes } from '../interfaces/forecast'
 import { Router } from '@angular/router';
-
+import { Unit } from 'openweathermap-ts/dist/types/';
+import OpenWeatherMap from 'openweathermap-ts';
+import * as x from '../../assets/token'
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastService {
+  
+  private weather = new OpenWeatherMap(x);
 
-  private uriForecast = "http://localhost:3001/weathers/forecast";
-
-  constructor(private client: HttpClient, private router: Router) { }
-
-  forecastCityName = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriForecast + `/cities/${cityName}`, { headers }).toPromise() as Promise<ForecastRes>;
+  constructor(private client: HttpClient, private router: Router) { 
+    this.weather.setUnits(localStorage.getItem('unit') as Unit)
   }
 
-  forecastCityId = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriForecast + `/id/${cityId}`, { headers }).toPromise() as Promise<ForecastRes>;
+  forecastCityName = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getThreeHourForecastByCityName({cityName})
   }
 
-  forecastZipCode = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriForecast + `/countries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<ForecastRes>;
+  forecastCityId = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getThreeHourForecastByCityId(cityId)
   }
 
-  forecastCoordinates = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriForecast + `/coordinates?long=${long}&lat=${lat}`, { headers }).toPromise() as Promise<ForecastRes>;
+  forecastZipCode = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getThreeHourForecastByZipcode(zipCode)
   }
 
-  foreCoordAll = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<ForecastRes> => {
-    const headers = new HttpHeaders().set("unit", unit);
-    return await this.client.get(this.uriForecast + `/coordinates/all?long=${long}&lat=${lat}`, { headers }).toPromise() as Promise<ForecastRes>;
+  forecastCoordinates = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getThreeHourForecastByGeoCoordinates(lat, long)
   }
 }

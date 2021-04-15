@@ -1,37 +1,35 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CurrentRes } from '../interfaces/forecast'
 import { Router } from '@angular/router';
+import OpenWeatherMap from 'openweathermap-ts';
+import { Unit } from 'openweathermap-ts/dist/types/';
+import * as x from '../../assets/token'
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrentService {
-  
-  private uriCurrent = "http://localhost:3001/weathers/current";
 
-  constructor(private client: HttpClient, private router: Router) { }
+  private weather = new OpenWeatherMap(x);
+ 
 
-  currentCityName = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriCurrent + `/cities/${cityName}`, { headers }).toPromise() as Promise<CurrentRes>;
+  constructor(private client: HttpClient, private router: Router) { 
+    this.weather.setUnits(localStorage.getItem('unit') as Unit)
   }
 
-  currentCityId = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
-    const headers = new HttpHeaders().set("unit", unit);
-    return await this.client.get(this.uriCurrent + `/id/${cityId}`, { headers,  }).toPromise() as Promise<CurrentRes>;
+   currentCityName = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => { 
+       return this.weather.getCurrentWeatherByCityName({ cityName })
+   }
+
+  currentCityId = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getCurrentWeatherByCityId(cityId)
   }
 
-  currentZipCode = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string): Promise<CurrentRes> => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return await this.client.get(this.uriCurrent + `/countries/${countryCode}/zipcodes/${zipCode}`, { headers }).toPromise() as Promise<CurrentRes>;
+  currentZipCode = (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getCurrentWeatherByZipcode(zipCode)
   }
 
-  currentCoordinates = async (long: number, lat: number, zipCode: string, countryCode: string, cityId: string, cityName: string, unit: string) => {
-    const { token } = JSON.parse(sessionStorage.getItem("user"))
-    const headers = new HttpHeaders().set("unit", unit).set("token", token );
-    return  await this.client.get(this.uriCurrent + `/coordinates?long=${long}&lat=${lat}`, { headers }).toPromise() as Promise<CurrentRes>;
+  currentCoordinates = async (long: number, lat?: number, zipCode?: number, countryCode?: string, cityId?: number, cityName?: string) => {
+    return this.weather.getCurrentWeatherByGeoCoordinates(lat,long)
   }
-}
+ }

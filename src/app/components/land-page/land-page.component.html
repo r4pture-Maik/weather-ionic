@@ -1,4 +1,4 @@
-<div *ngIf="!tab">
+<!-- <div *ngIf="!tab">
   <ion-list>
     <ion-list-header>
       <ion-skeleton-text animated style="width: 95%"></ion-skeleton-text>
@@ -78,4 +78,24 @@
       <ion-icon name="sunny-outline"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs>
+</ion-tabs> -->
+
+<ion-button (click)="getLocation()" expand="block">Get Location</ion-button>
+
+<ion-list>
+  <ion-list-header>
+    <ion-label>Location Info</ion-label>
+  </ion-list-header>
+  <ion-item>
+    <ion-label>
+      Latitue
+    </ion-label>
+    <ion-badge slot="end">{{latitude}}</ion-badge>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      longitude
+    </ion-label>
+    <ion-badge slot="end">{{longitude}}</ion-badge>
+  </ion-item>
+  </ion-list>

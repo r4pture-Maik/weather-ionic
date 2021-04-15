@@ -1,0 +1,20 @@
+<ion-card>
+  <ion-item>
+    <ion-label>Unit</ion-label>
+    <ion-select interface="popover" placeholder="Select one" [(ngModel)]="unit" name="unit">
+      <ion-select-option *ngFor="let item of units | keyvalue" [value]="item.key">{{item.value}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <!-- <ion-label position="floating">City</ion-label> -->
+    <ion-input type="text" [(ngModel)]="searchCountry" name="searchCountry" (ionChange)="filterCountry()" placeholder="{{countryInfo}}" required></ion-input>
+  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let item of countryFilter" (click)="selectedCountry(item)">{{item}}</ion-item>
+  </ion-list>
+
+  <ion-button shape="round" expand="block" (click)="resetSettings()">Reset</ion-button>
+
+</ion-card>
+{{searchCity}}

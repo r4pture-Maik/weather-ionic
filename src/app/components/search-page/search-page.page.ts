@@ -11,6 +11,7 @@ import { CurrentService } from '../../services/current.service';
 import { ForecastService } from '../../services/forecast.service';
 import { ApiServiceService } from '../../api-service.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CurrentResponse, ThreeHourResponse } from 'openweathermap-ts/dist/types';
 
 @Component({
   selector: 'app-search-page',
@@ -18,18 +19,17 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['./search-page.page.scss'],
 })
 export class SearchPagePage implements OnInit {
-  value: string;
-  searchChoice: string;
+  value: string = "Catania";
+  searchChoice: string = "city"
   country: string;
   lat: number;
   long: number;
-  isCurrent: boolean;
+  isCurrent: boolean = false
   tab: string;
   tempIndex: string;
   countryCodes;
 
-  researchRes: CurrentRes | ForecastRes;
-
+  researchRes: CurrentResponse | ThreeHourResponse;
   constructor(
     private apiCaller: ApiServiceService,
     private currentService: CurrentService,
@@ -37,22 +37,22 @@ export class SearchPagePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.countryCodes = countryCodes
-    switch (JSON.parse(sessionStorage.getItem("user")).unit) {
-      case 'metric':
-        this.tempIndex = "C"
-        break;
-      case 'standard':
-        this.tempIndex = "K"
-        break;
-      case 'imperial':
-        this.tempIndex = "F"
-        break;
-    }
+    //this.countryCodes = countryCodes
+    // switch (JSON.parse(sessionStorage.getItem("user")).unit) {
+    //   case 'metric':
+    //     this.tempIndex = "C"
+    //     break;
+    //   case 'standard':
+    //     this.tempIndex = "K"
+    //     break;
+    //   case 'imperial':
+    //     this.tempIndex = "F"
+    //     break;
+    // }
   }
 
   ionViewWillEnter(){
-    this.apiCaller.isLogged()
+    //this.apiCaller.isLogged()
   }
 
   chooseCall = (isCurrent: boolean, byWhat: string) => {
@@ -80,12 +80,12 @@ export class SearchPagePage implements OnInit {
     this.researchRes = await this.chooseCall(this.isCurrent, this.searchChoice)(
       Number(this.value),
       this.lat,
-      this.value,
-      JSON.parse(sessionStorage.getItem("user")).country,
-      this.value,
-      this.value,
-      JSON.parse(sessionStorage.getItem("user")).unit
-    );
+      Number(this.value),
+      localStorage.getItem("user"),
+      Number(this.value),
+      this.value
+      )
+    //console.log(this.mappedForecast)
   };
 
   changeTab = (tabValue) => {
@@ -93,25 +93,36 @@ export class SearchPagePage implements OnInit {
     this.tab = tabValue;
   }
 
-  instanceOfForecast = (object: any): object is Forecast => 'temp' in object;
+  instanceOfForecast = (object: any): ThreeHourResponse => 'list' in object ? object : {} ;
 
   get placeholderInfo(): String {return this.searchChoice == "coordinates" ? "Longitude" : "Insert city information"}
   
   get mappedForecast(): mappedForecast {
     if (!this.isCurrent || this.isCurrent !== undefined)
       return (
-        !this.instanceOfForecast(this.researchRes?.forecast) &&
-        this.researchRes?.forecast.reduce((acc, value) => {
-          const date = value.time.split(' ', 1)[0];
+        this.instanceOfForecast(this.researchRes).list.reduce((acc, value, index) => {
+          //const date = value.time.split(' ', 1)[0];
+          // return {
+          //   ...acc,
+          //   [date]: [...(acc[date] ? acc[date] : []), value],
+          // };
+          const {
+          main:{temp},
+          dt_txt,
+          weather,
+          wind:{speed}
+          } = value
+          const date = dt_txt.split(' ',1)[0]
           return {
             ...acc,
-            [date]: [...(acc[date] ? acc[date] : []), value],
+            [date]: {icon:weather[0].icon, date, main:weather[0].main, temp, speed},
           };
         }, {})
       );
   }
 
   get grouppedForecast(): string[] {
+    console.log(Object.keys(this.mappedForecast))
     return this.mappedForecast ? Object.keys(this.mappedForecast) : [];
   }
 }

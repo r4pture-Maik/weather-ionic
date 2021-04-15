@@ -16,17 +16,26 @@ const routes: Routes = [
     loadChildren: () => import('./components/navbar/navbar.module').then(m => m.NavbarModule),
   },
   {
-    path: 'login',
-    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule),
+    path: 'settings',
+    loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsPageModule),
   },
-  {
-    path: 'register',
-    loadChildren: () => import('./components/register/register.module').then(m => m.RegisterModule),
-  },
+  // {
+  //   path: 'login',
+  //   loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule),
+  // },
+  // {
+  //   path: 'register',
+  //   loadChildren: () => import('./components/register/register.module').then(m => m.RegisterModule),
+  // },
   {
     path: 'search-page',
     loadChildren: () => import('./components/search-page/search-page.module').then( m => m.SearchPagePageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./components/settings/settings.module').then( m => m.SettingsPageModule)
   }
+
 ];
 @NgModule({
   imports: [

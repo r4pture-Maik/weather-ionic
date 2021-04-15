@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterService {
   
-  private uriAuth = "http://localhost:3001/auth/"
+  private uriAuth = ""
 
   constructor(private client: HttpClient, private router: Router) { }
 

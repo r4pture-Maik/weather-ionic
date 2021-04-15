@@ -1,4 +1,4 @@
-<ion-card *ngIf="researchRes && isCurrent">
+<!-- <ion-card *ngIf="researchRes && isCurrent">
   <ion-grid class="current">
   
     <ion-row class="ion-justify-content-between ion-align-items-center">
@@ -118,43 +118,145 @@
     <ion-button type="submit" color="danger" expand="block" (click)="caller()">Search</ion-button>
   </ion-grid>
 </ion-content>
+-->
 
+<!-- Current research -->
+<ion-card *ngIf="researchRes && isCurrent">
+  <ion-grid class="current">
+    <ion-row class="ion-justify-content-between ion-align-items-center">
+      <ion-col size="5">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="6">
+            <ion-avatar>
+              <img src="http://openweathermap.org/img/wn/{{researchRes.weather[0].icon}}@2x.png">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="6">
+            <p class="ion-text-nowrap">
+              {{researchRes.main.temp}} {{tempIndex}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col size="5" class="ion-margin-end">
+        <ion-row class="ion-justify-content-end ion-wrap">
+          <ion-col class="ion-no-padding" size="12">
+            <h2 class="ion-no-margin ion-text-right ">{{researchRes.name}}</h2>
+          </ion-col>
+          <ion-col class="ion-no-padding" size="12">
+            <p class="ion-no-margin ion-text-right ">{{researchRes.weather.description}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>  
+    </ion-row>
+    
+    <ion-row class="ion-justify-content-around">
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding" size="12">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.temp_max}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp min</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding" size="12">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.temp_min}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Humidity</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.humidity}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+      <ion-col>
+        <ion-row class="ion-justify-content-center ion-wrap">
+          <ion-col class="ion-no-padding" size="12">
+            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Wind</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.wind.speed}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+  
+    </ion-row>
+  </ion-grid>
+</ion-card>
 
-<div *ngIf="researchRes && isCurrent === false">
-    <ng-container *ngIf="tab">
-      <ion-list class="forecast">
+<!-- Research -->
+<ion-content>
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-select placeholder="Choose" [(ngModel)]="isCurrent" name="isCurrent" interface="popover">
+          <ion-select-option [value]="true">Currently</ion-select-option>
+          <ion-select-option [value]="false">Next days</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-list>
         <ion-item>
-          <ion-avatar slot="start"></ion-avatar>
-          <ion-label><h3>Time</h3></ion-label>
-          <ion-label><h3>Description</h3></ion-label>
-          <ion-label><h3>Temp {{tempIndex}}</h3></ion-label>
-          <ion-label><h3>Wind</h3></ion-label>
-        </ion-item>
-
-        <ion-item *ngFor="let item of mappedForecast[tab]">
-          
-          <ion-avatar slot="start">
-            <img src="http://openweathermap.org/img/wn/{{item.wea.icon}}@2x.png">
-          </ion-avatar>
-          
-          <ion-label>
-            <h2>{{item.time | date: 'hh:mm'}}</h2>
-          </ion-label>
-
-          <ion-label>
-            <h2>{{item.wea.main}}</h2>
-          </ion-label>
-
-          <ion-label>
-            <h2>{{item.temp.temp}}</h2>
-          </ion-label>
-
-          <ion-label>
-            <h2>{{item.wind.speed}}</h2>
-          </ion-label>
+          <ion-select placeholder="Choose"[(ngModel)]="searchChoice" name="searchChoice" interface="popover">
+            <ion-select-option value="city">City</ion-select-option>
+            <ion-select-option value="cityId">City ID</ion-select-option>
+            <ion-select-option value="coordinates">Coordinates</ion-select-option>
+            <ion-select-option value="zipcode">Zip Code</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-list>
-    </ng-container>
+      <ion-input [(ngModel)]="value" name="value" placeholder="p"></ion-input>
+    </ion-list>
+    <ion-button type="submit" color="danger" expand="block" (click)="caller()">Search</ion-button>
+  </ion-card>
+</ion-content>
+
+
+<!-- Next days  -->
+<div *ngIf="researchRes && !isCurrent">
+  <ng-container *ngIf="tab">
+    <ion-list class="forecast">
+      <ion-item>
+        <ion-avatar slot="start"></ion-avatar>
+        <ion-label><h3>Time</h3></ion-label>
+        <ion-label><h3>Description</h3></ion-label>
+        <ion-label><h3>Temp {{tempIndex}}</h3></ion-label>
+        <ion-label><h3>Wind</h3></ion-label>
+      </ion-item>
+      <ion-item *ngFor="let item of mappedForecast[tab]">
+        <!-- <ion-avatar slot="start">
+          <img src="http://openweathermap.org/img/wn/{{item.value.icon}}@2x.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{item.value.date | date: 'hh:mm'}}</h2>
+        </ion-label> -->
+        <ion-label>
+          <h2>{{item}}</h2>
+        </ion-label>
+        <!-- <ion-label>
+          <h2>{{item.temp}}</h2>
+        </ion-label>
+        <ion-label>
+          <h2>{{item.speed}}</h2>
+        </ion-label> -->
+      </ion-item>
+    </ion-list>
+  </ng-container>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">

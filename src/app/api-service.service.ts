@@ -11,7 +11,7 @@ import { DataShareService } from 'src/app/services/data-share-service';
 })
 export class ApiServiceService {
 
-  private uriAuth = "http://localhost:3001/auth/"
+  private uriAuth = "http://59091babd711.ngrok.io/auth/"
 
   constructor(private client: HttpClient, private router: Router, private dataShareService: DataShareService) { }
  

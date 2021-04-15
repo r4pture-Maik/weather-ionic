@@ -48,7 +48,6 @@ export interface CurrentRes {
   forecast: Forecast;
   city: City;
 }
-
 export interface mappedForecast {
   [key: string]: Forecast[];
 }
