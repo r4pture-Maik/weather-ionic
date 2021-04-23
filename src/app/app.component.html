@@ -1,14 +1,9 @@
-
 <ion-content>
   <app-navbar slot="fixed"></app-navbar>
   <ion-app>
     <ion-split-pane contentId="main-content">
       <ion-menu contentId="main-content" type="overlay">
           <ion-list id="inbox-list">
-            <div *ngIf="logged">
-              <ion-list-header>{{userMail}}</ion-list-header>
-              <ion-note></ion-note>
-            </div>
             <ion-menu-toggle>
               <ion-item routerDirection="root" [routerLink]="['/land']" lines="none" detail="false"
                 routerLinkActive="selected">

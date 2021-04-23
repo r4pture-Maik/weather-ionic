@@ -10,9 +10,7 @@ import { AppComponent } from './app.component';
 
 //ComponentsModule
 import { HttpClientModule } from '@angular/common/http'
-import { ApiServiceService } from './api-service.service';
 import { NavbarRoutingModule } from './components/navbar/navbar-routing.module';
-import { RegisterModule } from './components/register/register.module';
 
 
 @NgModule({
@@ -24,9 +22,8 @@ import { RegisterModule } from './components/register/register.module';
     HttpClientModule,
     IonicSelectableModule,
     ReactiveFormsModule,
-    NavbarRoutingModule,
-    RegisterModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  },ApiServiceService],
+    NavbarRoutingModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  }],
   bootstrap: [AppComponent],
 
 })
