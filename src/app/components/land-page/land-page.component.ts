@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ForecastService } from '../../services/forecast.service';
-import { City, ForecastRes, mappedForecast } from 'src/app/interfaces/forecast';
 import { Geolocation} from '@ionic-native/geolocation/ngx' 
 @Component({
   selector: 'app-land-page',
@@ -17,7 +16,7 @@ export class LandPageComponent implements OnInit {
   tab: string;
   longitude: number;
   latitude: number;
-  forecast: ForecastRes | undefined;
+  //forecast: ForecastRes | undefined;
   dayKey: string = '';
   displayedColumns: string[] = [
     'date',
@@ -89,21 +88,21 @@ export class LandPageComponent implements OnInit {
 
   changeTab = (tabValue) => this.tab = tabValue;
 
-  get mappedForecast(): mappedForecast {
-    return this.forecast?.forecast.reduce((acc, value) => {
-      const date = value.time.split(' ', 1)[0];
-      return {
-        ...acc,
-        [date]: [...(acc[date] ? acc[date] : []), value],
-      };
-    }, {});
-  }
+  // get mappedForecast(): mappedForecast {
+  //   return this.forecast?.forecast.reduce((acc, value) => {
+  //     const date = value.time.split(' ', 1)[0];
+  //     return {
+  //       ...acc,
+  //       [date]: [...(acc[date] ? acc[date] : []), value],
+  //     };
+  //   }, {});
+  // }
   
-  get grouppedForecast(): string[] {
-    return this.mappedForecast ? Object.keys(this.mappedForecast) : [];
-  }
+  // get grouppedForecast(): string[] {
+  //   return this.mappedForecast ? Object.keys(this.mappedForecast) : [];
+  // }
 
-  get city(): City {
-    return this.forecast?.city;
-  }
+  // get city(): City {
+  //   return this.forecast?.city;
+  // }
 }

@@ -1,157 +1,120 @@
-<!-- Current research -->
-<ion-card *ngIf="researchRes && isCurrent">
-  <ion-grid class="current">
-    <ion-row class="ion-justify-content-between ion-align-items-center">
-      <ion-col size="5">
-        <ion-row class="ion-align-items-center">
-          <ion-col size="6">
-            <ion-avatar>
-              <img src="http://openweathermap.org/img/wn/{{researchRes.weather[0].icon}}@2x.png">
-            </ion-avatar>
-          </ion-col>
-          <ion-col size="6">
-            <p class="ion-text-nowrap">
-              {{researchRes.main.temp}} {{tempIndex}}
-            </p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="5" class="ion-margin-end">
-        <ion-row class="ion-justify-content-end ion-wrap">
-          <ion-col class="ion-no-padding" size="12">
-            <h2 class="ion-no-margin ion-text-right ">{{researchRes.name}}</h2>
-          </ion-col>
-          <ion-col class="ion-no-padding" size="12">
-            <p class="ion-no-margin ion-text-right ">{{researchRes.weather[0].description}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>  
-    </ion-row>
-    <ion-row class="ion-justify-content-around">
-      <ion-col>
-        <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding" size="12">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
-          </ion-col>
-          <ion-col class="ion-no-padding" size="12">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.temp_max}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding" size="12">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp min</h3>
-          </ion-col>
-          <ion-col class="ion-no-padding" size="12">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.temp_min}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding" size="12">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Humidity</h3>
-          </ion-col>
-          <ion-col class="ion-no-padding">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.humidity}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-row class="ion-justify-content-center ion-wrap">
-          <ion-col class="ion-no-padding" size="12">
-            <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Wind</h3>
-          </ion-col>
-          <ion-col class="ion-no-padding">
-            <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.wind.speed}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-card>
-
 <!-- Research -->
-<ion-content *ngIf="!researchRes">
-  <ion-card>
+<ion-card>
+  <ion-list>
+    <ion-item>
+      <ion-select placeholder="Choose" [(ngModel)]="isCurrent" name="isCurrent" interface="popover">
+        <ion-select-option [value]="true">Currently</ion-select-option>
+        <ion-select-option [value]="false">Next days</ion-select-option>
+      </ion-select>
+    </ion-item>
     <ion-list>
       <ion-item>
-        <ion-select placeholder="Choose" [(ngModel)]="isCurrent" name="isCurrent" interface="popover">
-          <ion-select-option [value]="true">Currently</ion-select-option>
-          <ion-select-option [value]="false">Next days</ion-select-option>
+        <ion-select placeholder="Choose" [(ngModel)]="searchChoice" name="searchChoice" interface="popover">
+          <ion-select-option value="city">City</ion-select-option>
+          <ion-select-option value="cityId">City ID</ion-select-option>
+          <ion-select-option value="coordinates">Coordinates</ion-select-option>
+          <ion-select-option value="zipcode">Zip Code</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-list>
-        <ion-item>
-          <ion-select placeholder="Choose"[(ngModel)]="searchChoice" name="searchChoice" interface="popover">
-            <ion-select-option value="city">City</ion-select-option>
-            <ion-select-option value="cityId">City ID</ion-select-option>
-            <ion-select-option value="coordinates">Coordinates</ion-select-option>
-            <ion-select-option value="zipcode">Zip Code</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-      <ion-input [(ngModel)]="value" name="value" placeholder="p"></ion-input>
     </ion-list>
-    <ion-button type="submit" color="danger" expand="block" (click)="caller()">Search</ion-button>
+    <ion-input [(ngModel)]="value" name="value" placeholder="p"></ion-input>
+  </ion-list>
+  <ion-button type="submit" color="danger" expand="block" (click)="caller()">Search</ion-button>
+</ion-card>
+
+<!-- Forecast response -->
+<ion-content *ngIf="researchRes && !isCurrent">
+  <ion-card>
+    <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, freeMode: true }">
+      <ion-slide *ngFor="let item of reducedForecast[tab]" class="slide">
+        <ion-col class="slider-element">
+          <ion-label>{{ item.dt_txt | date:'H:mm' }}</ion-label>
+            <ion-img class="forecast-slide-icon" src="../../../assets/forecast-icons/{{item.icon}}@2x.png"></ion-img>
+          <ion-label>{{item.temp}}</ion-label> 
+        </ion-col>  
+      </ion-slide>
+    </ion-slides>
+    <ion-segment scrollable>
+      <ion-segment-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">
+        <ion-label>{{key | date:'dd'}}</ion-label>
+        <ion-img src="../../../assets/forecast-icons/{{tabIcon(key)}}@2x.png"></ion-img>
+      </ion-segment-button>
+    </ion-segment>
   </ion-card>
 </ion-content>
 
-
-<!-- Next days  -->
-<!-- <div > -->
-<ion-content class="forecast" *ngIf="researchRes && !isCurrent">
-  <ion-list>
-    <ion-grid>
-      <ion-row>
-        <ion-col></ion-col>
-        <ion-col class="ol">Time</ion-col>
-        <ion-col class="ol">Description</ion-col>
-        <ion-col class="ol">Temp{{tempIndex}}</ion-col>
-        <ion-col class="ol">Wind</ion-col>
+<!-- Current research  -->
+<ion-content *ngIf="researchRes && isCurrent">
+  <ion-card>
+    <ion-grid class="current">
+      <ion-row class="ion-justify-content-between ion-align-items-center">
+        <ion-col size="5">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="6">
+              <ion-avatar>
+                <img src="../../../assets/forecast-icons/{{researchRes.weather[0].icon}}@2x.png">
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="6">
+              <p class="ion-text-nowrap">
+                {{researchRes.main.temp}} {{tempIndex}}
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="5" class="ion-margin-end">
+          <ion-row class="ion-justify-content-end ion-wrap">
+            <ion-col class="ion-no-padding" size="12">
+              <h2 class="ion-no-margin ion-text-right ">{{researchRes.name}}</h2>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <p class="ion-no-margin ion-text-right ">{{researchRes.weather[0].description}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>  
+      </ion-row>
+      <ion-row class="ion-justify-content-around">
+        <ion-col>
+          <ion-row class="ion-justify-content-center ion-wrap">
+            <ion-col class="ion-no-padding" size="12">
+              <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp max</h3>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.temp_max}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row class="ion-justify-content-center ion-wrap">
+            <ion-col class="ion-no-padding" size="12">
+              <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Temp min</h3>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.temp_min}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row class="ion-justify-content-center ion-wrap">
+            <ion-col class="ion-no-padding" size="12">
+              <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Humidity</h3>
+            </ion-col>
+            <ion-col class="ion-no-padding">
+              <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.main.humidity}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row class="ion-justify-content-center ion-wrap">
+            <ion-col class="ion-no-padding" size="12">
+              <h3 class="ion-no-margin ion-text-center ion-text-nowrap">Wind</h3>
+            </ion-col>
+            <ion-col class="ion-no-padding">
+              <p class="ion-no-margin ion-text-center ion-text-nowrap">{{researchRes.wind.speed}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-item *ngFor="let item of mappedForecast[tab]">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <img src="http://openweathermap.org/img/wn/{{item.icon}}@4x.png">
-          </ion-col>
-          <ion-col>
-            <ion-label>
-              <h2>{{item.dt_txt | date: 'hh:mm'}}</h2>
-            </ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-label>
-              <h2>{{item.main}}</h2>
-            </ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-label>
-              <h2>{{item.temp}}</h2>
-            </ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-label>
-              <h2>{{item.speed}}</h2>
-            </ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list> 
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button *ngFor="let key of grouppedForecast" (click)="changeTab(key)">
-        <ion-label>{{key | date:'dd/M'}}</ion-label>
-        <ion-icon name="sunny-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button (click)="changeTab(null)">
-        <ion-label>Reset</ion-label>
-        <ion-icon name="search"></ion-icon>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+  </ion-card> 
 </ion-content>
